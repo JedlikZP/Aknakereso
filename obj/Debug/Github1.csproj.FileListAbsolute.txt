@@ -1,0 +1,7 @@
+C:\Users\Fehér.Szabolcs1\Source\Repos\Aknakereso\Github1\obj\Debug\Github1.csprojAssemblyReference.cache
+C:\Users\Fehér.Szabolcs1\Source\Repos\Aknakereso\Github1\obj\Debug\Github1.csproj.CoreCompileInputs.cache
+C:\Users\Fehér.Szabolcs1\Source\Repos\Aknakereso\Github1\bin\Debug\Github1.exe.config
+C:\Users\Fehér.Szabolcs1\Source\Repos\Aknakereso\Github1\bin\Debug\Github1.exe
+C:\Users\Fehér.Szabolcs1\Source\Repos\Aknakereso\Github1\bin\Debug\Github1.pdb
+C:\Users\Fehér.Szabolcs1\Source\Repos\Aknakereso\Github1\obj\Debug\Github1.exe
+C:\Users\Fehér.Szabolcs1\Source\Repos\Aknakereso\Github1\obj\Debug\Github1.pdb

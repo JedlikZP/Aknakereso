@@ -8,13 +8,13 @@ namespace Aknakereso_javitott
 {
     class Program
     {
+
         static void Main(string[] args)
         {
             char[,] pálya = new char[12, 12];
             Feltöltés(pálya);
             Bombasorsoló(pálya);
             Kirajzoló(pálya, true);
-            Ellenőrző(pálya);
             int lépx;
             int lépy;
             do
@@ -38,6 +38,7 @@ namespace Aknakereso_javitott
 
         static void Lépés(char[,] pálya, out int lépx, out int lépy)
         {
+
             Console.WriteLine("Kérem a sorszámot.");
             lépx = int.Parse(Console.ReadLine());
             Console.WriteLine("Kérem az oszlopszámot.");
@@ -47,16 +48,12 @@ namespace Aknakereso_javitott
                 Kirajzoló(pálya, true);
                 Console.WriteLine("Felrobbantál.");
             }
-            else if (pálya[lépx,lépy]!='_' || pálya[lépx,lépy]!='B' || pálya[lépx,lépy]!='X')
-            {
-                Console.WriteLine("Gratulálok, nyertél!");
-            }
+
             else
             {
                 pálya[lépx, lépy] = char.Parse(BombaSzomszédSzám(pálya, lépx, lépy).ToString());
-                Kirajzoló(pálya, false);
+                Kirajzoló(pálya, true);
             }
-
         }
 
         static void Bombasorsoló(char[,] pálya)
@@ -70,8 +67,8 @@ namespace Aknakereso_javitott
             {
                 do
                 {
-                    sor = gép.Next(1,11);
-                    oszlop = gép.Next(1,11);
+                    sor = gép.Next(1, 11);
+                    oszlop = gép.Next(1, 11);
                 } while (pálya[sor, oszlop] == 'B');
                 pálya[sor, oszlop] = 'B';
             }
@@ -79,9 +76,9 @@ namespace Aknakereso_javitott
 
         static void Kirajzoló(char[,] pálya, bool legyenbomba)
         {
-            for (int i = 1; i < pálya.GetLength(0)-1; i++)
+            for (int i = 1; i < pálya.GetLength(0) - 1; i++)
             {
-                for (int j = 1; j < pálya.GetLength(1)-1; j++)
+                for (int j = 1; j < pálya.GetLength(1) - 1; j++)
                 {
                     if (!legyenbomba)
                     {
@@ -97,8 +94,8 @@ namespace Aknakereso_javitott
                     else
                     {
                         Console.Write(pálya[i, j]);
-                    }
 
+                    }
                     Console.Write('|');
                 }
                 Console.WriteLine();
@@ -112,29 +109,13 @@ namespace Aknakereso_javitott
             {
                 for (int j = lépy - 1; j <= lépy + 1; j++)
                 {
-                    if (pálya[i,j]=='B')
+                    if (pálya[i, j] == 'B')
                     {
                         bombadb++;
                     }
                 }
             }
             return bombadb;
-        }
-
-        static int Ellenőrző(char[,] pálya)
-        {
-            int számoló = 0;
-            for (int i = 0; i < pálya.GetLength(0); i++)
-            {
-                for (int j = 0; j < pálya.GetLength(1); j++)
-                {
-                    if (pálya[i,j]=='_')
-                    {
-                        számoló++;
-                    }
-                }
-            }
-            return számoló;
         }
     }
 }
