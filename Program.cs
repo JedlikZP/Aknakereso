@@ -4,29 +4,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Aknakereso_javitott
+namespace Aknakereso
 {
     class Program
     {
 
         static void Main(string[] args)
         {
-            char[,] pálya = new char[12, 12];
+            char[,] pálya = new char[10, 10];
             Feltöltés(pálya);
-            Bombasorsoló(pálya);
-            Kirajzoló(pálya, true);
-            int lépx;
-            int lépy;
-            do
-            {
-                Lépés(pálya, out lépx, out lépy);
-            } while (pálya[lépx, lépy] != 'B');
+            Console.WriteLine("adja meg mennyi bombát szeretne");
+            int bombaszam = int.Parse(Console.ReadLine());
+            bombasorsolo(pálya, bombaszam);
+            Kirajzoló(pálya, false);
+            lepes(pálya);
             Console.ReadKey();
         }
 
         static void Feltöltés(char[,] pálya)
         {
-
             for (int i = 0; i < pálya.GetLength(0); i++)
             {
                 for (int j = 0; j < pálya.GetLength(1); j++)
@@ -36,86 +32,82 @@ namespace Aknakereso_javitott
             }
         }
 
-        static void Lépés(char[,] pálya, out int lépx, out int lépy)
+        static void lepes(char[,] pálya)
         {
-
-            Console.WriteLine("Kérem a sorszámot.");
-            lépx = int.Parse(Console.ReadLine());
-            Console.WriteLine("Kérem az oszlopszámot.");
-            lépy = int.Parse(Console.ReadLine());
-            if (pálya[lépx, lépy] == 'B')
+            int sor, oszlop;
+            do
             {
-                Kirajzoló(pálya, true);
-                Console.WriteLine("Felrobbantál.");
-            }
+                Console.Clear();
+                Kirajzoló(pálya, false);
+                do
+                {
+                    Console.WriteLine("adja meg a sort");
+                    sor = int.Parse(Console.ReadLine());
+                } while (sor > 10 || sor <= 0);
+                sor--;
+                do
+                {
+                    Console.WriteLine("adja meg az oszlopot");
+                    oszlop = int.Parse(Console.ReadLine());
+                } while (oszlop > 10 || oszlop <= 0);
+                oszlop--;
+                if (pálya[sor, oszlop] == 'B')
+                {
+                    Console.WriteLine("Felrobbantál");
+                    Kirajzoló(pálya, true);
+                    break;
+                }
+                int szomszedok = 0;
+                if (sor > 0 && pálya[sor - 1, oszlop] == 'B') szomszedok++;
+                if (sor > 0 && oszlop > 0 && pálya[sor - 1, oszlop - 1] == 'B') szomszedok++;
+                if (sor > 0 && oszlop < 9 && pálya[sor - 1, oszlop + 1] == 'B') szomszedok++;
+                if (oszlop > 0 && pálya[sor, oszlop - 1] == 'B') szomszedok++;
+                if (oszlop < 9 && pálya[sor, oszlop + 1] == 'B') szomszedok++;
+                if (oszlop > 0 && sor < 9 && pálya[sor + 1, oszlop - 1] == 'B') szomszedok++;
+                if (sor < 9 && pálya[sor + 1, oszlop] == 'B') szomszedok++;
+                if (sor < 9 && oszlop < 9 && pálya[sor + 1, oszlop + 1] == 'B') szomszedok++;
+                pálya[sor, oszlop] = Convert.ToChar(szomszedok);
 
-            else
-            {
-                pálya[lépx, lépy] = char.Parse(BombaSzomszédSzám(pálya, lépx, lépy).ToString());
-                Kirajzoló(pálya, true);
-            }
+            } while (pálya[sor, oszlop] != 'B');
         }
 
-        static void Bombasorsoló(char[,] pálya)
+        static void bombasorsolo(char[,] pálya, int bombaszam)
         {
             Random gép = new Random();
-            Console.WriteLine("Add meg a bombaszámot.");
-            int bombaszám = int.Parse(Console.ReadLine());
-            int sor;
-            int oszlop;
-            for (int i = 0; i < bombaszám; i++)
+            int sor, oszlop;
+            for (int i = 0; i < bombaszam; i++)
             {
                 do
                 {
-                    sor = gép.Next(1, 11);
-                    oszlop = gép.Next(1, 11);
+                    sor = gép.Next(10);
+                    oszlop = gép.Next(10);
                 } while (pálya[sor, oszlop] == 'B');
                 pálya[sor, oszlop] = 'B';
             }
         }
 
-        static void Kirajzoló(char[,] pálya, bool legyenbomba)
+        static void Kirajzoló(char[,] pálya, bool showbomb)
         {
-            for (int i = 1; i < pálya.GetLength(0) - 1; i++)
+            for (int i = 0; i < pálya.GetLength(0); i++)
             {
-                for (int j = 1; j < pálya.GetLength(1) - 1; j++)
+                for (int j = 0; j < pálya.GetLength(1); j++)
                 {
-                    if (!legyenbomba)
+                    if (showbomb)
                     {
-                        if (pálya[i, j] == 'B')
-                        {
-                            Console.Write('_');
-                        }
-                        else
-                        {
-                            Console.Write(pálya[i, j]);
-                        }
+                        Console.Write(pálya[i, j]);
+                    }
+                    else if (pálya[i, j] == '0' || pálya[i, j] == '1' || pálya[i, j] == '2' || pálya[i, j] == '3' || pálya[i, j] == '4' || pálya[i, j] == '5' || pálya[i, j] == '6' || pálya[i, j] == '7' || pálya[i, j] == '8')
+                    {
+                        Console.Write(pálya[i, j]);
                     }
                     else
                     {
-                        Console.Write(pálya[i, j]);
-
+                        Console.Write('_');
                     }
                     Console.Write('|');
                 }
                 Console.WriteLine();
             }
-        }
-
-        static int BombaSzomszédSzám(char[,] pálya, int lépx, int lépy)
-        {
-            int bombadb = 0;
-            for (int i = lépx - 1; i <= lépx + 1; i++)
-            {
-                for (int j = lépy - 1; j <= lépy + 1; j++)
-                {
-                    if (pálya[i, j] == 'B')
-                    {
-                        bombadb++;
-                    }
-                }
-            }
-            return bombadb;
         }
     }
 }
